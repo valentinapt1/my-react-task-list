@@ -1,8 +1,19 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 
 function TaskList() {
   const [todos, setTodos] = useState([]);
   const [newTodoText, setNewTodoText] = useState("");
+
+   useEffect(() => {
+    const storedTodos = localStorage.getItem("todos");
+    if (storedTodos) {
+      setTodos(JSON.parse(storedTodos));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const handleAddTodo = () => {
     if (newTodoText.trim() !== "") {
